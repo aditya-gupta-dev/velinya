@@ -10,55 +10,55 @@
     --font-sans: 'Inter', sans-serif;
 
     /* ─── Brand Colors ──────────────────────────────────── */
-    --color-wise-green: #9fe870;
-    --color-wise-green-hover: #cdffad;
-    --color-wise-green-neutral: #c5edab;
-    --color-wise-green-pale: #e2f6d5;
+    --color-wise-green: var(--wise-green);
+    --color-wise-green-hover: var(--wise-green-hover);
+    --color-wise-green-neutral: var(--wise-green-neutral);
+    --color-wise-green-pale: var(--wise-green-pale);
 
     /* ─── Surfaces ──────────────────────────────────────── */
-    --color-canvas: #ffffff;
-    --color-canvas-soft: #e8ebe6;
+    --color-canvas: var(--canvas);
+    --color-canvas-soft: var(--canvas-soft);
 
     /* ─── Text ──────────────────────────────────────────── */
-    --color-ink: #0e0f0c;
-    --color-ink-deep: #163300;
-    --color-body: #454745;
-    --color-mute: #868685;
+    --color-ink: var(--ink);
+    --color-ink-deep: var(--ink-deep);
+    --color-body: var(--body);
+    --color-mute: var(--mute);
 
     /* ─── Semantic ──────────────────────────────────────── */
-    --color-positive: #2ead4b;
-    --color-positive-deep: #054d28;
-    --color-warning: #ffd11a;
-    --color-warning-deep: #b86700;
-    --color-warning-content: #4a3b1c;
-    --color-negative: #d03238;
-    --color-negative-deep: #a72027;
-    --color-negative-darkest: #a7000d;
-    --color-negative-bg: #320707;
+    --color-positive: var(--positive);
+    --color-positive-deep: var(--positive-deep);
+    --color-warning: var(--warning);
+    --color-warning-deep: var(--warning-deep);
+    --color-warning-content: var(--warning-content);
+    --color-negative: var(--negative);
+    --color-negative-deep: var(--negative-deep);
+    --color-negative-darkest: var(--negative-darkest);
+    --color-negative-bg: var(--negative-bg);
 
     /* ─── Accent ────────────────────────────────────────── */
-    --color-accent-orange: #ffc091;
-    --color-accent-cyan: #38c8ff;
+    --color-accent-orange: var(--accent-orange);
+    --color-accent-cyan: var(--accent-cyan);
 
     /* ─── Shadcn Overrides ──────────────────────────────── */
-    --color-background: #e8ebe6;
-    --color-foreground: #0e0f0c;
-    --color-card: #ffffff;
-    --color-card-foreground: #0e0f0c;
-    --color-popover: #ffffff;
-    --color-popover-foreground: #0e0f0c;
-    --color-primary: #9fe870;
-    --color-primary-foreground: #0e0f0c;
-    --color-secondary: #e8ebe6;
-    --color-secondary-foreground: #0e0f0c;
-    --color-muted: #e8ebe6;
-    --color-muted-foreground: #868685;
-    --color-accent: #e2f6d5;
-    --color-accent-foreground: #0e0f0c;
-    --color-destructive: #d03238;
-    --color-border: #d4d7d0;
-    --color-input: #d4d7d0;
-    --color-ring: #9fe870;
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
 
     /* ─── Radius from Wise spec ─────────────────────────── */
     --radius-sm: 8px;
@@ -70,6 +70,52 @@
 }
 
 @layer base {
+  :root {
+    --wise-green: #9fe870;
+    --wise-green-hover: #cdffad;
+    --wise-green-neutral: #c5edab;
+    --wise-green-pale: #e2f6d5;
+
+    --canvas: #ffffff;
+    --canvas-soft: #e8ebe6;
+
+    --ink: #0e0f0c;
+    --ink-deep: #163300;
+    --body: #454745;
+    --mute: #868685;
+
+    --positive: #2ead4b;
+    --positive-deep: #054d28;
+    --warning: #ffd11a;
+    --warning-deep: #b86700;
+    --warning-content: #4a3b1c;
+    --negative: #d03238;
+    --negative-deep: #a72027;
+    --negative-darkest: #a7000d;
+    --negative-bg: #320707;
+
+    --accent-orange: #ffc091;
+    --accent-cyan: #38c8ff;
+
+    --background: var(--canvas-soft);
+    --foreground: var(--ink);
+    --card: var(--canvas);
+    --card-foreground: var(--ink);
+    --popover: var(--canvas);
+    --popover-foreground: var(--ink);
+    --primary: var(--wise-green);
+    --primary-foreground: var(--ink);
+    --secondary: var(--canvas-soft);
+    --secondary-foreground: var(--ink);
+    --muted: var(--canvas-soft);
+    --muted-foreground: var(--mute);
+    --accent: var(--wise-green-pale);
+    --accent-foreground: var(--ink);
+    --destructive: var(--negative);
+    --border: #d4d7d0;
+    --input: var(--border);
+    --ring: var(--wise-green);
+  }
   * {
     @apply border-border outline-ring/50;
   }
@@ -81,26 +127,29 @@
     scroll-behavior: smooth;
   }
   .dark {
-    --color-canvas: #181917;
-    --color-canvas-soft: #1f211f;
-    --color-ink: #f4f5f2;
-    --color-ink-deep: #e8ebe6;
-    --color-body: #a1a39f;
-    --color-mute: #6c6f6b;
-    --color-border: #353834;
-    --color-wise-green-pale: #223616;
-    
-    --color-background: var(--color-canvas-soft);
-    --color-foreground: var(--color-ink);
-    --color-card: var(--color-canvas);
-    --color-card-foreground: var(--color-ink);
-    --color-popover: var(--color-canvas);
-    --color-popover-foreground: var(--color-ink);
-    --color-secondary: var(--color-canvas-soft);
-    --color-secondary-foreground: var(--color-ink);
-    --color-muted: var(--color-canvas-soft);
-    --color-muted-foreground: var(--color-mute);
-    --color-input: var(--color-border);
+    color-scheme: dark;
+    --canvas: #181917;
+    --canvas-soft: #1f211f;
+    --ink: #f4f5f2;
+    --ink-deep: #e8ebe6;
+    --body: #a1a39f;
+    --mute: #6c6f6b;
+    --wise-green-pale: #223616;
+    --background: var(--canvas-soft);
+    --foreground: var(--ink);
+    --card: var(--canvas);
+    --card-foreground: var(--ink);
+    --popover: var(--canvas);
+    --popover-foreground: var(--ink);
+    --secondary: var(--canvas-soft);
+    --secondary-foreground: var(--ink);
+    --muted: var(--canvas-soft);
+    --muted-foreground: var(--mute);
+    --border: #353834;
+    --input: var(--border);
+  }
+  .light {
+    color-scheme: light;
   }
 }
 
