@@ -24,6 +24,10 @@ export default function AppLayout() {
   const isNotesMode = !location.pathname.startsWith("/todos");
   const currentMode = isNotesMode ? "notes" : "todos";
 
+  useEffect(() => {
+    localStorage.setItem("lastPage", currentMode === "notes" ? "/notes" : "/todos");
+  }, [currentMode]);
+
   // FAB scroll visibility
   const [fabVisible, setFabVisible] = useState(true);
   const scrollTimer = useRef<ReturnType<typeof setTimeout> | null>(null);

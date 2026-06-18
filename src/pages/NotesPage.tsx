@@ -1,14 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFolders, useNotes } from "@/hooks/useFirestore";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function NotesPage() {
   const { data: folders, isLoading: foldersLoading } = useFolders();
-  const [selectedFolder, setSelectedFolder] = useState<string | null>(null);
+  const [selectedFolder, setSelectedFolder] = useState<string | null>(() => {
+    return localStorage.getItem("lastViewedFolder");
+  });
   
   const navigate = useNavigate();
   const folderId = selectedFolder || (folders?.[0]?.id ?? null);
+
+  useEffect(() => {
+    if (folderId) {
+      localStorage.setItem("lastViewedFolder", folderId);
+    }
+  }, [folderId]);
   
   const { data: notes, isLoading: notesLoading } = useNotes(folderId ?? "");
 

@@ -35,7 +35,8 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
   }
   
   if (user) {
-    return <Navigate to="/notes" replace />;
+    const lastPage = localStorage.getItem("lastPage") || "/notes";
+    return <Navigate to={lastPage} replace />;
   }
   
   return <>{children}</>;

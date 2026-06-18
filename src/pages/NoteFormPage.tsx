@@ -29,7 +29,12 @@ export default function NoteFormPage() {
     } else if (!isEditing && folderId) {
       setSelectedFolder(folderId);
     } else if (!isEditing && folders && folders.length > 0 && !selectedFolder) {
-      setSelectedFolder(folders[0].id);
+      const lastUploadFolder = localStorage.getItem("lastUploadFolder");
+      if (lastUploadFolder && folders.some(f => f.id === lastUploadFolder)) {
+        setSelectedFolder(lastUploadFolder);
+      } else {
+        setSelectedFolder(folders[0].id);
+      }
     }
   }, [note, isEditing, folderId, folders, selectedFolder]);
 
@@ -38,6 +43,8 @@ export default function NoteFormPage() {
       alert("Please provide a folder, title, and description.");
       return;
     }
+
+    localStorage.setItem("lastUploadFolder", selectedFolder);
 
     if (isEditing && noteId) {
       updateNote.mutate(
@@ -120,7 +127,7 @@ export default function NoteFormPage() {
           placeholder="Write your note here..."
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="flex-1 resize-none bg-canvas-soft px-4 py-4 rounded-xl border-none focus-visible:ring-2 focus-visible:ring-wise-green shadow-sm text-base text-body placeholder:text-mute"
+          className="flex-1 resize-none overflow-y-auto [field-sizing:fixed] bg-canvas-soft px-4 py-4 rounded-xl border-none focus-visible:ring-2 focus-visible:ring-wise-green shadow-sm text-base text-body placeholder:text-mute"
         />
       </div>
     </div>

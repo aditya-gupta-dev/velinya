@@ -94,7 +94,7 @@ export default function TodoFormPage() {
           placeholder="Describe the task..."
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="flex-1 resize-none bg-canvas-soft px-4 py-4 rounded-xl border-none focus-visible:ring-2 focus-visible:ring-wise-green shadow-sm text-base text-body placeholder:text-mute"
+          className="flex-1 resize-none overflow-y-auto [field-sizing:fixed] bg-canvas-soft px-4 py-4 rounded-xl border-none focus-visible:ring-2 focus-visible:ring-wise-green shadow-sm text-base text-body placeholder:text-mute"
         />
       </div>
     </div>
