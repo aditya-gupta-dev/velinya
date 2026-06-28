@@ -206,12 +206,8 @@ These keys persist UI state across browser sessions:
    - Updated `DailyTask` schema to seamlessly include a new `completed_times` Record.
    - Integrated `recharts` to plot a dynamically colored `AreaChart` using the `--positive` CSS variable directly. This plots the exact time of day a habit was checked off versus the date.
 
-3. **Todos UI Grid Refactor** (`TodosPage.tsx`)
-   - Refactored Todos to a split-screen layout (pending tasks on the left, summary cards on the right).
-   - Fixed missing `bg-primary-pale` to use `bg-wise-green-pale`.
-
-4. **Firestore Offline Caching** (`firebase.ts`)
+3. **Firestore Offline Caching** (`firebase.ts`)
    - Replaced basic `getFirestore()` init with `initializeFirestore` and `persistentLocalCache` to provide robust caching capabilities.
 
-5. **Build Optimization** (`vite.config.ts`)
+4. **Build Optimization** (`vite.config.ts`)
    - Added explicit `manualChunks` to split `firebase`, `recharts`, `lucide-react`, and `vendor` scripts to fix Vite chunk size limits.
