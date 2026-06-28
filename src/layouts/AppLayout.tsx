@@ -21,11 +21,12 @@ export default function AppLayout() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isNotesMode = !location.pathname.startsWith("/todos");
-  const currentMode = isNotesMode ? "notes" : "todos";
+  const isNotesMode = !location.pathname.startsWith("/todos") && !location.pathname.startsWith("/daily");
+  const isDailyMode = location.pathname.startsWith("/daily");
+  const currentMode = isDailyMode ? "daily" : (isNotesMode ? "notes" : "todos");
 
   useEffect(() => {
-    localStorage.setItem("lastPage", currentMode === "notes" ? "/notes" : "/todos");
+    localStorage.setItem("lastPage", currentMode === "notes" ? "/notes" : currentMode === "todos" ? "/todos" : "/daily");
   }, [currentMode]);
 
   // FAB scroll visibility
@@ -50,11 +51,16 @@ export default function AppLayout() {
 
   const handleModeSwitch = (mode: string) => {
     if (mode === "notes") navigate("/notes");
+    else if (mode === "daily") navigate("/daily");
     else navigate("/todos");
   };
 
   const handleFabClick = () => {
     if (currentMode === "notes") navigate("/notes/new");
+    else if (currentMode === "daily") {
+      if (location.pathname === "/daily" || location.pathname === "/daily/") navigate("/daily/new");
+      else navigate(`${location.pathname}/new`);
+    }
     else navigate("/todos/new");
   };
 
@@ -63,7 +69,9 @@ export default function AppLayout() {
     location.pathname === "/notes/new" ||
     location.pathname === "/todos/new" ||
     (location.pathname.startsWith("/notes/") &&
-      location.pathname.split("/").length > 3);
+      location.pathname.split("/").length > 3) ||
+    location.pathname === "/daily/new" ||
+    (location.pathname.startsWith("/daily/") && location.pathname.endsWith("/new"));
 
   return (
     <div className="min-h-svh bg-canvas-soft flex flex-col">
@@ -85,13 +93,20 @@ export default function AppLayout() {
                       <line x1="16" y1="17" x2="8" y2="17"/>
                       <polyline points="10 9 9 9 8 9"/>
                     </svg>
+                  ) : currentMode === "daily" ? (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                      <line x1="16" y1="2" x2="16" y2="6"/>
+                      <line x1="8" y1="2" x2="8" y2="6"/>
+                      <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
                   ) : (
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                       <polyline points="22 4 12 14.01 9 11.01"/>
                     </svg>
                   )}
-                  {currentMode === "notes" ? "Notes" : "Todos"}
+                  {currentMode === "notes" ? "Notes" : currentMode === "daily" ? "Daily" : "Todos"}
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="6 9 12 15 18 9"/>
                   </svg>
@@ -106,6 +121,18 @@ export default function AppLayout() {
                     <polyline points="14 2 14 8 20 8"/>
                   </svg>
                   Notes
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => handleModeSwitch("daily")}
+                  className="rounded-lg gap-2 cursor-pointer"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                  Daily
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => handleModeSwitch("todos")}

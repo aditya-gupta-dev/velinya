@@ -10,6 +10,10 @@ import NotesPage from "@/pages/NotesPage";
 import NoteFormPage from "@/pages/NoteFormPage";
 import TodosPage from "@/pages/TodosPage";
 import TodoFormPage from "@/pages/TodoFormPage";
+import DailyTasksPage from "@/pages/DailyTasksPage";
+import DailyFolderFormPage from "@/pages/DailyFolderFormPage";
+import DailyTasksFolderPage from "@/pages/DailyTasksFolderPage";
+import DailyTaskFormPage from "@/pages/DailyTaskFormPage";
 
 const queryClient = new QueryClient();
 
@@ -73,6 +77,12 @@ function App() {
                 {/* Todos Routes */}
                 <Route path="/todos" element={<TodosPage />} />
                 <Route path="/todos/new" element={<TodoFormPage />} />
+                
+                {/* Daily Routes */}
+                <Route path="/daily" element={<DailyTasksPage />} />
+                <Route path="/daily/new" element={<DailyFolderFormPage />} />
+                <Route path="/daily/:folderId" element={<DailyTasksFolderPage />} />
+                <Route path="/daily/:folderId/new" element={<DailyTaskFormPage />} />
                 
                 {/* Catch all */}
                 <Route path="*" element={<Navigate to="/notes" replace />} />
