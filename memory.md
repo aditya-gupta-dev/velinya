@@ -190,4 +190,28 @@ These keys persist UI state across browser sessions:
 - **Todos have no edit/delete UI**: `updateTodo` and `deleteTodo` exist in the hooks but the TodosPage only supports viewing and completing, not editing or deleting.
 - **shadcn/ui Textarea has `field-sizing-content`**: This CSS property makes textareas auto-grow. If you want a fixed-height scrollable textarea, you MUST override it with `[field-sizing:fixed]`.
 - **Query invalidation is manual**: Since `staleTime` is `Infinity`, data won't refetch unless you explicitly `invalidateQueries`. If you add new mutations, remember to invalidate.
-- **No offline support**: Despite being a PWA, there's no offline data caching. The service worker only caches static assets.
+- **Offline Support Added**: `initializeFirestore` is now configured with `persistentLocalCache` enabling offline reading.
+
+### Session: 2026-06-28 — Daily Habits Tracker, Analytics, & Offline Support
+
+**Features added:**
+
+1. **Daily Habits Tracker** (`DailyTasksFolderPage.tsx`, `DailyFolderFormPage.tsx`, `DailyTaskFormPage.tsx`)
+   - Added a new major section for habit tracking. 
+   - A grid layout calculates day columns automatically based on the folder's creation date.
+   - Used fixed widths and `w-24 sm:w-36` div containers within `table-layout: auto` to strictly enforce text truncation without letting HTML tables stretch unconditionally.
+   - Built an interactive task details modal using `shadcn/ui` Dialog.
+
+2. **Recharts Analytics & Data Schema Updates** (`firestoreDaily.ts`, `useFirestoreDaily.ts`)
+   - Updated `DailyTask` schema to seamlessly include a new `completed_times` Record.
+   - Integrated `recharts` to plot a dynamically colored `AreaChart` using the `--positive` CSS variable directly. This plots the exact time of day a habit was checked off versus the date.
+
+3. **Todos UI Grid Refactor** (`TodosPage.tsx`)
+   - Refactored Todos to a split-screen layout (pending tasks on the left, summary cards on the right).
+   - Fixed missing `bg-primary-pale` to use `bg-wise-green-pale`.
+
+4. **Firestore Offline Caching** (`firebase.ts`)
+   - Replaced basic `getFirestore()` init with `initializeFirestore` and `persistentLocalCache` to provide robust caching capabilities.
+
+5. **Build Optimization** (`vite.config.ts`)
+   - Added explicit `manualChunks` to split `firebase`, `recharts`, `lucide-react`, and `vendor` scripts to fix Vite chunk size limits.
