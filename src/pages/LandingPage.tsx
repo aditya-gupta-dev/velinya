@@ -1,4 +1,5 @@
 import { useAuth } from "@/contexts/AuthContext";
+import { AboutDialog } from "@/components/AboutDialog";
 
 export default function LandingPage() {
   const { signInWithGoogle } = useAuth();
@@ -10,7 +11,7 @@ export default function LandingPage() {
         <div className="w-28 h-28 rounded-2xl overflow-hidden shadow-lg">
           <img
             src="/app-icon.jpg"
-            alt="Velinya"
+            alt="Velinya app icon — notes and todos organizer"
             className="w-full h-full object-cover"
           />
         </div>
@@ -58,6 +59,26 @@ export default function LandingPage() {
         <p className="text-sm text-mute text-center">
           Sign in to sync your data across all your devices
         </p>
+      </div>
+
+      {/* About link at the bottom */}
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center">
+        <AboutDialog
+          trigger={
+            <button
+              id="landing-about-btn"
+              className="flex items-center gap-1.5 text-xs text-mute hover:text-body
+                         transition-colors cursor-pointer"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="16" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12.01" y2="8" />
+              </svg>
+              About this app
+            </button>
+          }
+        />
       </div>
     </div>
   );

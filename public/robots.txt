@@ -1,0 +1,9 @@
+# Velinya — robots.txt
+User-agent: *
+Allow: /
+Disallow: /notes/
+Disallow: /todos/
+Disallow: /daily/
+
+# Sitemap
+Sitemap: https://velinya.web.app/sitemap.xml

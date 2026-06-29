@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AddFolderDialog } from "@/components/AddFolderDialog";
+import { AboutDialog } from "@/components/AboutDialog";
 
 export default function AppLayout() {
   const { user, logout } = useAuth();
@@ -24,6 +25,8 @@ export default function AppLayout() {
   const isNotesMode = !location.pathname.startsWith("/todos") && !location.pathname.startsWith("/daily");
   const isDailyMode = location.pathname.startsWith("/daily");
   const currentMode = isDailyMode ? "daily" : (isNotesMode ? "notes" : "todos");
+
+  const [aboutOpen, setAboutOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("lastPage", currentMode === "notes" ? "/notes" : currentMode === "todos" ? "/todos" : "/daily");
@@ -199,10 +202,21 @@ export default function AppLayout() {
                 </DropdownMenuPortal>
               </DropdownMenuSub>
               <DropdownMenuItem
-                onClick={logout}
-                className="rounded-lg text-negative cursor-pointer font-medium"
+                onClick={() => setAboutOpen(true)}
+                className="rounded-lg cursor-pointer font-medium gap-2"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="16" x2="12" y2="12" />
+                  <line x1="12" y1="8" x2="12.01" y2="8" />
+                </svg>
+                About
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={logout}
+                className="rounded-lg text-negative cursor-pointer font-medium gap-2"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
                   <polyline points="16 17 21 12 16 7"/>
                   <line x1="21" y1="12" x2="9" y2="12"/>
@@ -211,6 +225,7 @@ export default function AppLayout() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          <AboutDialog open={aboutOpen} onOpenChange={setAboutOpen} />
         </div>
       </header>
 
@@ -231,7 +246,7 @@ export default function AppLayout() {
                        transition-all duration-200 cursor-pointer overflow-hidden
                        ${fabVisible ? "fab-visible" : "fab-hidden"}`}
           >
-            <img src="/app-icon.jpg" alt="Create" className="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover" />
+            <img src="/app-icon.jpg" alt="Create new note, todo, or daily task" className="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover" />
           </button>
         </div>
       )}
