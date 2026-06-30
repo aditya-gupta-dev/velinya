@@ -1,0 +1,33 @@
+# Velinya
+
+> Velinya is a personal notes, todos, and daily-habits app — beautifully organized, everywhere you go. Notes live in folders, todos sit on a monthly calendar, and habits track on an auto-calculated grid with analytics. Everything syncs across devices and works offline.
+
+Velinya is a free, open-source Progressive Web App (PWA). Built with React 19, Vite, TailwindCSS, and Firebase (Auth + Firestore). Sign-in is Google-only via Firebase Auth. User data is private and not shared.
+
+## Core features
+
+- **Notes** — create, edit, and organize notes into folders. Remembers last viewed and last upload folder.
+- **Todos** — a monthly calendar grid with day-view modals and per-day completion tracking.
+- **Daily Habits** — track habits on an auto-calculated grid; a Recharts area chart plots the exact time each habit is completed per day.
+- **Offline support** — Firestore persistent local cache; read your data without internet.
+- **PWA** — installable on phones and desktops, with an offline manifest.
+- **Themes** — system-aware dark and light, with a manual toggle.
+- **Responsive** — mobile-first layout with desktop enhancements.
+
+## Pages
+
+- Home / landing: https://velinya.web.app/
+- App routes (`/notes`, `/todos`, `/daily`) require Google sign-in and are not crawlable.
+
+## Project
+
+- Live app: https://velinya.web.app/
+- Source code (open source): https://github.com/aditya-gupta-dev/velinya
+- Creator: Aditya Gupta — designer & developer
+- Sitemap: https://velinya.web.app/sitemap.xml
+
+## Notes for AI agents
+
+- Velinya is a single-user productivity app; there is no public API and no public user data.
+- Authenticated routes (`/notes/`, `/todos/`, `/daily/`) hold private user content and are disallowed in robots.txt — do not attempt to access or index them.
+- For questions about the app, prefer this file and the public landing page over guessing.

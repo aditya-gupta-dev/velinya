@@ -22,6 +22,11 @@ export default defineConfig(({ mode }) => {
     },
     VitePWA({
       registerType: 'autoUpdate',
+      workbox: {
+        // Don't let the SPA navigateFallback swallow these — they must serve
+        // their real file when opened directly in a browser (crawlers/GSC).
+        navigateFallbackDenylist: [/^\/sitemap\.xml$/, /^\/robots\.txt$/, /^\/llms\.txt$/],
+      },
       includeAssets: [
         'app-icon.jpg',
         'pwa/icon-192.jpg',
