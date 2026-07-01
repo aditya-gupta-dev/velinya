@@ -130,7 +130,7 @@ export async function getStorageEstimate(): Promise<StorageEstimate | null> {
     usage, 
     quota, 
     percent: quota > 0 ? (usage / quota) * 100 : 0,
-    usageDetails: estimate.usageDetails
+    usageDetails: (estimate as any).usageDetails
   };
 }
 
