@@ -1,4 +1,5 @@
-import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc, serverTimestamp, query, orderBy, setDoc, getDoc } from "firebase/firestore";
+import { collection, doc, serverTimestamp, query, orderBy } from "firebase/firestore";
+import { getDocs, addDoc, updateDoc, deleteDoc, setDoc, getDoc } from "@/lib/requestStats";
 import { db } from "@/lib/firebase";
 
 function userBasePath(email: string) {
@@ -56,6 +57,13 @@ export async function createDailyFolder(email: string, title: string, descriptio
   return ref.id;
 }
 
+export async function deleteDailyFolder(email: string, folderId: string): Promise<void> {
+  // Delete all tasks in the folder first
+  const tasksSnap = await getDocs(collection(db, userBasePath(email), "dailyFolders", folderId, "dailyTasks"));
+  await Promise.all(tasksSnap.docs.map((d) => deleteDoc(d.ref)));
+  await deleteDoc(doc(db, userBasePath(email), "dailyFolders", folderId));
+}
+
 export async function getDailyTasks(email: string, folderId: string): Promise<DailyTask[]> {
   const snap = await getDocs(query(collection(db, userBasePath(email), "dailyFolders", folderId, "dailyTasks"), orderBy("created_at", "asc")));
   return snap.docs.map((d) => {
@@ -81,6 +89,10 @@ export async function createDailyTask(email: string, folderId: string, title: st
     created_at: serverTimestamp(),
   });
   return ref.id;
+}
+
+export async function deleteDailyTask(email: string, folderId: string, taskId: string): Promise<void> {
+  await deleteDoc(doc(db, userBasePath(email), "dailyFolders", folderId, "dailyTasks", taskId));
 }
 
 export async function toggleDailyTaskDay(email: string, folderId: string, taskId: string, dayStr: string, completedDays: string[], completedTimes: Record<string, string> = {}): Promise<void> {

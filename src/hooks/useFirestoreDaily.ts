@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  getDailyFolders, getDailyFolder, createDailyFolder,
-  getDailyTasks, createDailyTask, toggleDailyTaskDay
+  getDailyFolders, getDailyFolder, createDailyFolder, deleteDailyFolder,
+  getDailyTasks, createDailyTask, deleteDailyTask, toggleDailyTaskDay
 } from "@/lib/firestoreDaily";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -41,6 +41,17 @@ export function useCreateDailyFolder() {
   });
 }
 
+export function useDeleteDailyFolder() {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (folderId: string) => deleteDailyFolder(user?.email!, folderId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["dailyFolders", user?.email] });
+    },
+  });
+}
+
 export function useDailyTasks(folderId: string) {
   const { user } = useAuth();
   return useQuery({
@@ -57,6 +68,17 @@ export function useCreateDailyTask() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (vars: { folderId: string; title: string; description: string }) => createDailyTask(user?.email!, vars.folderId, vars.title, vars.description),
+    onSuccess: (_, vars) => {
+      queryClient.invalidateQueries({ queryKey: ["dailyTasks", user?.email, vars.folderId] });
+    },
+  });
+}
+
+export function useDeleteDailyTask() {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (vars: { folderId: string; taskId: string }) => deleteDailyTask(user?.email!, vars.folderId, vars.taskId),
     onSuccess: (_, vars) => {
       queryClient.invalidateQueries({ queryKey: ["dailyTasks", user?.email, vars.folderId] });
     },

@@ -7,9 +7,33 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-const APP_VERSION = "1.0.0";
+const APP_VERSION = "1.2.0";
 
 const CHANGELOG = [
+  {
+    version: "1.2.0",
+    date: "July 2, 2026",
+    title: "Transparency & Tracking",
+    changes: [
+      "Settings Menu — added a new settings panel in the user dropdown",
+      "Network Transparency — tracks and displays every single database read and write performed on your device",
+      "Cache Statistics — view exactly how much offline storage space the app is using",
+      "Zero Overhead Tracking — locally intercepts Firebase requests to count operations without any data leaving your device",
+    ],
+  },
+  {
+    version: "1.1.0",
+    date: "July 2, 2026",
+    title: "Delete Daily Folders & Tasks",
+    changes: [
+      "Delete Daily Folder — remove a daily folder and all its tasks from the Daily Tasks page",
+      "Delete Daily Task — remove a specific task from its detail modal",
+      "Confirmation Prompts — deletes ask before permanently removing data",
+      "llms.txt — added an AI-agent-friendly summary of the app",
+      "Absolute Social Images — Open Graph & Twitter icons now load correctly when shared",
+      "GitHub Link — view the open-source repo from the About dialog",
+    ],
+  },
   {
     version: "1.0.0",
     date: "June 29, 2026",

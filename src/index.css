@@ -67,6 +67,13 @@
     --radius-xl: 24px;
     --radius-2xl: 32px;
     --radius-pill: 9999px;
+
+    --animate-shimmer: shimmer 1.5s infinite;
+    @keyframes shimmer {
+      100% {
+        transform: translateX(100%);
+      }
+    }
 }
 
 @layer base {

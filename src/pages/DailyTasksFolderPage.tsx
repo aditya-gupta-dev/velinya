@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useDailyFolder, useDailyTasks, useToggleDailyTaskDay } from "@/hooks/useFirestoreDaily";
-import { Loader2 } from "lucide-react";
+import { useDailyFolder, useDailyTasks, useToggleDailyTaskDay, useDeleteDailyTask } from "@/hooks/useFirestoreDaily";
+import { Loader2, Trash2 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AreaChart, Area, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import type { DailyTask } from "@/lib/firestoreDaily";
@@ -12,8 +12,19 @@ export default function DailyTasksFolderPage() {
   const { data: folder, isLoading: folderLoading } = useDailyFolder(folderId || "");
   const { data: tasks, isLoading: tasksLoading } = useDailyTasks(folderId || "");
   const toggleDay = useToggleDailyTaskDay();
+  const deleteTask = useDeleteDailyTask();
 
   const [selectedTask, setSelectedTask] = useState<DailyTask | null>(null);
+
+  const handleDeleteTask = () => {
+    if (!folderId || !selectedTask) return;
+    if (confirm(`Delete task "${selectedTask.title}"? This cannot be undone.`)) {
+      deleteTask.mutate(
+        { folderId, taskId: selectedTask.id },
+        { onSuccess: () => setSelectedTask(null) }
+      );
+    }
+  };
 
   // Calculate days to show
   let daysArray: number[] = [];
@@ -235,6 +246,17 @@ export default function DailyTasksFolderPage() {
                   Not enough data for chart yet.
                 </div>
               )}
+
+              <div className="flex justify-end mt-6">
+                <button
+                  onClick={handleDeleteTask}
+                  disabled={deleteTask.isPending}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-negative border border-negative/20 hover:bg-negative-bg transition-colors font-medium text-sm disabled:opacity-50 cursor-pointer"
+                >
+                  {deleteTask.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                  Delete Task
+                </button>
+              </div>
             </>
           )}
         </DialogContent>

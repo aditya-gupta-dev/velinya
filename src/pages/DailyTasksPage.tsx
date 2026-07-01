@@ -1,9 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import { useDailyFolders } from "@/hooks/useFirestoreDaily";
+import { Trash2 } from "lucide-react";
+import { useDailyFolders, useDeleteDailyFolder } from "@/hooks/useFirestoreDaily";
 
 export default function DailyTasksPage() {
   const { data: folders, isLoading } = useDailyFolders();
+  const deleteFolder = useDeleteDailyFolder();
   const navigate = useNavigate();
+
+  const handleDelete = (e: React.MouseEvent, id: string, title: string) => {
+    e.stopPropagation();
+    if (confirm(`Delete "${title}" and all its tasks? This cannot be undone.`)) {
+      deleteFolder.mutate(id);
+    }
+  };
 
   return (
     <div className="page-enter flex flex-col h-[calc(100svh-120px)] bg-canvas-soft max-w-5xl mx-auto w-full pb-20">
@@ -21,17 +30,26 @@ export default function DailyTasksPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {folders?.map(folder => (
-            <button
+            <div
               key={folder.id}
               onClick={() => navigate(`/daily/${folder.id}`)}
-              className="bg-canvas p-5 rounded-2xl border border-border shadow-sm hover:border-wise-green hover:shadow-md transition-all text-left group cursor-pointer"
+              className="relative bg-canvas p-5 rounded-2xl border border-border shadow-sm hover:border-wise-green hover:shadow-md transition-all text-left group cursor-pointer"
             >
-              <h3 className="font-display font-bold text-xl text-ink group-hover:text-wise-green mb-2">{folder.title}</h3>
+              <button
+                onClick={(e) => handleDelete(e, folder.id, folder.title)}
+                disabled={deleteFolder.isPending}
+                className="absolute top-3 right-3 p-2 rounded-lg text-mute hover:text-negative hover:bg-negative-bg transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100 disabled:opacity-50 cursor-pointer"
+                aria-label={`Delete ${folder.title}`}
+                title="Delete folder"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+              <h3 className="font-display font-bold text-xl text-ink group-hover:text-wise-green mb-2 pr-8">{folder.title}</h3>
               <p className="text-sm text-body line-clamp-2">{folder.description}</p>
               <div className="mt-4 text-xs text-mute">
                 Started {new Date(folder.created_at).toLocaleDateString()}
               </div>
-            </button>
+            </div>
           ))}
         </div>
       )}

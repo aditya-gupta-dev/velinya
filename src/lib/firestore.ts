@@ -1,16 +1,18 @@
 import {
   collection,
   doc,
+  serverTimestamp,
+  query,
+  orderBy,
+} from "firebase/firestore";
+import {
   getDocs,
   addDoc,
   updateDoc,
   deleteDoc,
-  serverTimestamp,
-  query,
-  orderBy,
   setDoc,
   getDoc,
-} from "firebase/firestore";
+} from "@/lib/requestStats";
 import { db } from "@/lib/firebase";
 
 // ─── Types ───────────────────────────────────────────────────────────────────

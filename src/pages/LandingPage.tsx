@@ -67,15 +67,17 @@ export default function LandingPage() {
           trigger={
             <button
               id="landing-about-btn"
-              className="flex items-center gap-1.5 text-xs text-mute hover:text-body
-                         transition-colors cursor-pointer"
+              className="relative overflow-hidden flex items-center gap-1.5 text-xs font-medium text-ink/70 hover:text-ink
+                         bg-ink/5 hover:bg-ink/10 px-4 py-2 rounded-full
+                         transition-all cursor-pointer backdrop-blur-sm group shadow-sm border border-border/40"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-ink/10 to-transparent group-hover:animate-[shimmer_1.5s_infinite]" />
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="relative z-10">
                 <circle cx="12" cy="12" r="10" />
                 <line x1="12" y1="16" x2="12" y2="12" />
                 <line x1="12" y1="8" x2="12.01" y2="8" />
               </svg>
-              About this app
+              <span className="relative z-10">About this app</span>
             </button>
           }
         />
